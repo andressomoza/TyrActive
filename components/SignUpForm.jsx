@@ -1,11 +1,12 @@
-import { View, Text, Image } from 'react-native';
+import { View, Text, Image, Alert } from 'react-native';
 import React, { useState } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Link } from 'expo-router';
 import { Dropdown } from 'react-native-element-dropdown';
 import { Redirect, router } from "expo-router";
-import { createUserWithEmailAndPassword } from "firebase/auth";
-import { FIREBASE_AUTH } from '../firebase-config'
+import { createUserWithEmailAndPassword, sendEmailVerification } from "firebase/auth";
+import { FIREBASE_AUTH, FIRESTORE } from '../firebase-config'
+import { doc, setDoc } from "firebase/firestore";
 
 import FormField from '../components/FormField';
 import CustomButton from '../components/CustomButton';
@@ -66,13 +67,29 @@ const SignUp = () => {
   }
 
   const handleSignUp = (values) => {
-    console.log("entra")
     createUserWithEmailAndPassword(auth, form.email, values.password)
       .then((userCredential) => {
         console.log('User created');
         const user = userCredential.user;
         console.log(user);
-        router.replace("/home");
+        const docRef = doc(FIRESTORE, "users", user.uid);
+        setDoc(docRef, form);
+        sendEmailVerification(auth.currentUser)
+          .then(() => {
+            console.log('Email sent');
+          })
+          .catch((error) => {
+            console.log(error.message);
+          });
+          Alert.alert('Registro', 'Se le ha enviado un email de verificación', [
+            {
+              text: 'Cancelar',
+              onPress: () => console.log('Cancel Pressed'),
+              style: 'cancel',
+            },
+            {text: 'OK', onPress: () => console.log('OK Pressed')},
+          ]);
+        router.navigate("/");
       })
       .catch((error) => {
         console.log(error.message);
@@ -155,23 +172,26 @@ const SignUp = () => {
             {errors.birthday && touched.birthday ? (<Text>{errors.birthday}</Text>) : null}
 
             <View className="flex-row items-center justify-between mb-8">
-              <FormField
-                placeholder="Peso (kg)"
-                value={values.weight}
-                handleChangeText={handleChange('weight')}
-                onBlur={handleBlur('weight')}
-                otherStyles="mt-3 w-[40vw]"
-              />
-              {errors.weight && touched.weight ? (<Text>{errors.weight}</Text>) : null}
-
-              <FormField
-                placeholder="Estatura (cm)"
-                value={values.height}
-                handleChangeText={handleChange('height')}
-                onBlur={handleBlur('height')}
-                otherStyles="mt-3 w-[40vw]"
-              />
-              {errors.height && touched.height ? (<Text>{errors.height}</Text>) : null}
+              <View className="flex-col">
+                <FormField
+                  placeholder="Peso (kg)"
+                  value={values.weight}
+                  handleChangeText={handleChange('weight')}
+                  onBlur={handleBlur('weight')}
+                  otherStyles="mt-3 w-[40vw]"
+                />
+                {errors.weight && touched.weight ? (<Text>{errors.weight}</Text>) : null}
+              </View>
+              <View className="flex-col">
+                <FormField
+                  placeholder="Estatura (cm)"
+                  value={values.height}
+                  handleChangeText={handleChange('height')}
+                  onBlur={handleBlur('height')}
+                  otherStyles="mt-3 w-[40vw]"
+                />
+                {errors.height && touched.height ? (<Text>{errors.height}</Text>) : null}
+              </View>
             </View>
 
             <Dropdown
@@ -193,7 +213,7 @@ const SignUp = () => {
             />
             {errors.sex && touched.sex ? (<Text>{errors.sex}</Text>) : null}
 
-            <View className="w-full justify-end flex-row">
+            <View className="w-full justify-around flex-row">
               <CustomButton
                 title="Anterior"
                 handlePress={() => setStep(1)}
@@ -230,7 +250,7 @@ const SignUp = () => {
             />
             {errors.password && touched.password ? (<Text>{errors.password}</Text>) : null}
 
-            <View className="w-full justify-end flex-row">
+            <View className="w-full justify-around flex-row">
               <CustomButton
                 title="Anterior"
                 handlePress={() => setStep(2)}

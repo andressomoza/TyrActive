@@ -1,12 +1,12 @@
 import { View, Text } from 'react-native'
 import React from 'react'
 
-const Create = () => {
+const MiZona = () => {
   return (
     <View>
-      <Text>Create</Text>
+      <Text>Mi Zona</Text>
     </View>
   )
 }
 
-export default Create
+export default MiZona

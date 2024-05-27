@@ -19,16 +19,6 @@ const Home = () => {
     console.log(usuario)
     setUser(usuario)
   }
-
-  const signout = () => {
-    auth.signOut().then(() => {
-      console.log('Sesion cerrada')
-      router.navigate("/");
-
-    }).catch((error) => {
-      console.log(error)
-    });
-  }
   
   return (
     <SafeAreaView>
@@ -36,15 +26,10 @@ const Home = () => {
         <Text>Home</Text>
         <Text>{user}</Text>
         <CustomButton 
-            title="Iniciar sesión"
+            title="Mostrar id"
             handlePress={() => prueba()}
             containerStyles="w-[60vw] mt-7"
           />
-        <CustomButton 
-          title="Cerrar sesion"
-          handlePress={() => signout()}
-          containerStyles="w-[60vw] mt-7"
-        />
       </View>
     </SafeAreaView>
   )

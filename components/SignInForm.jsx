@@ -1,9 +1,9 @@
-import { View, Text } from 'react-native'
+import { View, Text, Alert } from 'react-native'
 import React, { useState } from 'react'
 import { Formik } from 'formik'
 import * as Yup from 'yup'
 import Validator from 'email-validator'
-import { signInWithEmailAndPassword } from "firebase/auth";
+import { signInWithEmailAndPassword, sendEmailVerification } from "firebase/auth";
 import { Redirect, router } from "expo-router";
 import { FIREBASE_AUTH } from '../firebase-config';
 
@@ -21,11 +21,24 @@ const SignInForm = () => {
   const handleSignIn = async (email, password) => {
     signInWithEmailAndPassword(auth, email, password)
     .then((userCredential) => {
-
-      console.log('User signed in')
       const user = userCredential.user
-      console.log(user)
-      router.replace("/home");
+      if (!user.emailVerified) {
+        console.log('Email no verificado')
+        Alert.alert('Verificación', 'Compruebe su correo electrónico para verificar su cuenta', [
+          {
+            text: 'Cancelar',
+            onPress: () => console.log('Cancel Pressed'),
+            style: 'cancel',
+          },
+          {text: 'OK', onPress: () => console.log('OK Pressed')},
+        ]);
+        auth.signOut().then(() => {
+          console.log('Sesion cerrada')
+        })
+      } else {
+        console.log('¡SESIÓN INICIADA!', user)
+        router.replace("/home");
+      }
     }
     )
     .catch((error) => {
