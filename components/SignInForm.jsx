@@ -1,12 +1,10 @@
-import { View, Text, Alert } from 'react-native'
+import { View, Text } from 'react-native'
 import React, { useState } from 'react'
 import { Formik } from 'formik'
 import * as Yup from 'yup'
-import Validator from 'email-validator'
-import { signInWithEmailAndPassword, sendEmailVerification } from "firebase/auth";
-import { Redirect, router } from "expo-router";
 import { FIREBASE_AUTH } from '../firebase-config';
 
+import { signInUser } from '../utils/reusable-functions'
 import FormField from './FormField'
 import CustomButton from './CustomButton'
 
@@ -18,37 +16,8 @@ const SignInForm = () => {
   })
 
   const auth = FIREBASE_AUTH
-  const handleSignIn = async (email, password) => {
-    signInWithEmailAndPassword(auth, email, password)
-    .then((userCredential) => {
-      const user = userCredential.user
-      if (!user.emailVerified) {
-        console.log('Email no verificado')
-        Alert.alert('Verificación', 'Compruebe su correo electrónico para verificar su cuenta', [
-          {
-            text: 'Cancelar',
-            onPress: () => console.log('Cancel Pressed'),
-            style: 'cancel',
-          },
-          {text: 'OK', onPress: () => console.log('OK Pressed')},
-        ]);
-        auth.signOut().then(() => {
-          console.log('Sesion cerrada')
-        })
-      } else {
-        console.log('¡SESIÓN INICIADA!', user)
-        router.replace("/home");
-      }
-    }
-    )
-    .catch((error) => {
-      console.log(error.code)
-      if (error.code === 'auth/invalid-credential') {
-        setError('Contraseña incorrecta')
-      } else if (error.code === 'auth/invalid-email') {
-        setError('Email incorrecto')
-      }
-    })
+  const handleSignIn = (email, password) => {
+    signInUser(auth, email, password)
   }
 
   return (

@@ -1,22 +1,13 @@
-import { View, Text, Image } from 'react-native'
-import React, { useState, useContext } from 'react'
+import { View, Text } from 'react-native'
+import React, { useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { Link } from 'expo-router'
-import { Redirect, router } from "expo-router";
-import { signInWithEmailAndPassword } from "firebase/auth";
-import { FIREBASE_AUTH } from '../../firebase-config';
+import { router } from "expo-router";
 
-import { images } from '../../constants'
-import FormField from '../../components/FormField'
 import CustomButton from '../../components/CustomButton'
 import SignInForm from '../../components/SignInForm';
 
 const SignIn = () => {
-  const [form, setForm] = useState({
-    email: '',
-    password: ''
-  })
-  const [error, setError] = useState([])
   const [isSubmitting, setIsSubmitting] = useState(false)
 
   return (

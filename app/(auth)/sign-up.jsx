@@ -1,16 +1,10 @@
-import { View, Text, Image } from 'react-native';
-import React, { useState } from 'react';
+import { View, Text } from 'react-native';
+import React from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { Link } from 'expo-router';
-import { Redirect, router } from "expo-router";
-import { createUserWithEmailAndPassword } from "firebase/auth";
-import { FIREBASE_AUTH } from '../../firebase-config';
 
 import SignUpForm from '../../components/SignUpForm';
 
 const SignUp = () => {
-  const auth = FIREBASE_AUTH;
-
   return (
     <SafeAreaView className="bg-primary h-full">
       <View className="w-full h-full px-7 mt-4">
