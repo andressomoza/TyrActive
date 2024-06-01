@@ -52,7 +52,7 @@ export const signInUser = (auth, email, password) => {
         })
       } else {
         console.log('¡SESIÓN INICIADA!', user)
-        router.replace("/home");
+        router.navigate("/home");
       }
     }
     )

@@ -3,6 +3,8 @@ import React, { useState } from 'react'
 import { Formik } from 'formik'
 import * as Yup from 'yup'
 import { FIREBASE_AUTH } from '../firebase-config';
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { router } from "expo-router";
 
 import { signInUser } from '../utils/reusable-functions'
 import FormField from './FormField'
@@ -17,13 +19,38 @@ const SignInForm = () => {
 
   const auth = FIREBASE_AUTH
   const handleSignIn = (email, password) => {
-    signInUser(auth, email, password)
+    signInWithEmailAndPassword(auth, email, password)
+    .then((userCredential) => {
+      const user = userCredential.user
+      if (!user.emailVerified) {
+        console.log('Email no verificado')
+        Alert.alert('Verificación', 'Compruebe su correo electrónico para verificar su cuenta', [
+          {
+            text: 'Cancelar',
+            onPress: () => console.log('Cancel Pressed'),
+            style: 'cancel',
+          },
+          {text: 'OK', onPress: () => console.log('OK Pressed')},
+        ]);
+        auth.signOut().then(() => {
+          console.log('Sesion cerrada')
+        })
+      } else {
+        console.log('¡SESIÓN INICIADA!', user)
+        router.navigate("/home");
+      }
+    }
+    )
+    .catch((error) => {
+      console.log(error.code)
+      setError("Email o contraseña incorrectos")
+    })
   }
 
   return (
     <>
     <View>
-          {error && <Text className="mt-5 text-red-600">{error}</Text>}
+      {error && <Text className="mt-5 text-red-600">{error}</Text>}
     </View>
     <Formik
       initialValues={{email: '', password: ''}}
