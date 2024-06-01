@@ -6,6 +6,7 @@ import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } f
 import { initializeApp } from "firebase/app";
 import { firebaseConfig } from "../../firebase-config";
 
+import Card from '../../components/Card';
 import CustomButton from '../../components/CustomButton';
 
 const Profile = () => {
@@ -27,6 +28,7 @@ const Profile = () => {
     <SafeAreaView>
       <View>
         <Text>Profile</Text>
+        <Card />
         <CustomButton 
           title="Cerrar sesion"
           handlePress={() => signout()}

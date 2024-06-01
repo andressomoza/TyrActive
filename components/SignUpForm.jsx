@@ -11,7 +11,7 @@ import * as Yup from 'yup';
 const SignUp1Schema = Yup.object().shape({
   name: Yup.string().required('Requerido'),
   email: Yup.string().email('Correo inválido').required('Requerido'),
-  phone: Yup.number().positive().integer().required('Requerido'),
+  phone: Yup.number("Debe introducir un número de teléfono válido").positive("Debe introducir un número de teléfono válido").integer("Debe introducir un número de teléfono válido").min(100000000, "Debe introducir un número de teléfono válido").max(999999999, "Debe introducir un número de teléfono válido").required('Requerido'),
   password: Yup.string().required('Requerido'),
 
 })
