@@ -51,12 +51,12 @@ const TabsLayout = () => {
               <TabIcon icon={icons.plus} color={color} name="Mi Zona" focused={focused}/>
         )}}/>
         <Tabs.Screen
-          name="profile"
+          name="(profile)"
           options={{
             title: "Profile",
             headerShown: false,
             tabBarIcon: ({ color, focused }) => (
-              <TabIcon icon={icons.profile} color={color} name="Profile" focused={focused}/>
+              <TabIcon icon={icons.profile} color={color} name="Perfil" focused={focused}/>
         )}}/>
     </Tabs>
     </>

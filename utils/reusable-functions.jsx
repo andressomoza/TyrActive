@@ -26,6 +26,7 @@ export const registerUser = (auth, email, password, name, phone) => {
         updateProfile(auth.currentUser, {
           displayName: name, phoneNumber: phone
         }).catch((error) => {console.log(error.message)})
+        console.log(auth.currentUser)
       router.navigate("/")
     })
     .catch((error) => {
