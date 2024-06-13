@@ -18,6 +18,14 @@ const ProfileLayout = () => {
           name="change-password"
           options={{headerShown: false}}
         />
+        <Stack.Screen
+          name="my-subscription"
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="subscription-details"
+          options={{headerShown: false}}
+        />
       </Stack>
 
       <StatusBar backgroundColor="#161622" style="dark" />

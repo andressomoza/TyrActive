@@ -1,10 +1,11 @@
-import { View, Text, SafeAreaView, Image, Touchable, TouchableOpacity, ScrollView } from 'react-native'
-import Reac, { useState } from 'react'
+import { View, Text, SafeAreaView, Image, Alert, TouchableOpacity, ScrollView } from 'react-native'
+import Reac, { useState, useEffect } from 'react'
 import { FIREBASE_AUTH } from '../../../firebase-config';
 import * as ImagePicker from 'expo-image-picker'
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 import { updateProfile, updatePhoneNumber } from "firebase/auth";
+import { RemoteInfoDatasource } from "../../../data/remote-info.datasource";
 
 import CustomButton from '../../../components/CustomButton'
 import FormField from '../../../components/FormField'
@@ -18,7 +19,17 @@ const SignUpSchema = Yup.object().shape({
 })
 
 const PersonalData = () => {
-  const [image, setImage] = useState(FIREBASE_AUTH.currentUser.photoURL !== null ? FIREBASE_AUTH.currentUser.photoURL : 'https://www.w3schools.com/w3images/avatar2.png');
+  const [datos, setDatos] = useState({});
+  const [image, setImage] = useState(datos.photoUrl !== null ? datos.photoUrl : 'https://www.w3schools.com/w3images/avatar2.png');
+    
+  useEffect(() => {
+    RemoteInfoDatasource.getDoc('users', FIREBASE_AUTH.currentUser.uid)
+    .then((data) => {
+      setDatos(data)
+      setImage(data.photoUrl)
+    });
+  }, [])
+  
   const pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
@@ -31,14 +42,17 @@ const PersonalData = () => {
     console.log(result.assets[0].uri);
   
     if (!result.canceled) {
+      let info = { ...datos, photoUrl: result.assets[0].uri }
+      setDatos(info);
       setImage(result.assets[0].uri);
     }
   }
 
   const handleChangeData = (values) => {
-    updateProfile(FIREBASE_AUTH.currentUser, {
+    RemoteInfoDatasource.updateUser('users', FIREBASE_AUTH.currentUser.uid, values.name, values.email, image, values.phone)
+    /*updateProfile(FIREBASE_AUTH.currentUser, {
       displayName: values.name,
-      photoURL: image
+      photoUrl: datos.photoUrl
     }).then(() => {
       console.log('Datos actualizados')
     }).catch((error) => {
@@ -52,6 +66,10 @@ const PersonalData = () => {
         console.log(error)
       })
     console.log(values)
+    */
+    Alert.alert('Actualización de datos', 'Se han actualizado los datos de tu perfil', [
+      {text: 'OK', onPress: () => console.log('OK Pressed')},
+    ]);
   }
   
   return (
@@ -66,14 +84,15 @@ const PersonalData = () => {
             onPress={pickImage}
           >
             <Image
-              source={{uri: image}}
+              source={{uri: datos.photoUrl !== null ? datos.photoUrl : 'https://www.w3schools.com/w3images/avatar2.png'}}
               style={{ width: 150, height: 150, borderRadius: 100 }}
             />
           </TouchableOpacity>
           <View className="w-[90vw]">
+            { datos.name !== undefined ?
             <>
               <Formik 
-                initialValues={{ name: FIREBASE_AUTH.currentUser.displayName, email: FIREBASE_AUTH.currentUser.email, phone: FIREBASE_AUTH.currentUser.phoneNumber }}
+                initialValues={{ name: datos.name, email: datos.email, phone: datos.phone }}
                 validationSchema={SignUpSchema}
                 onSubmit={values => handleChangeData(values)}
                 validateOnMount={true}
@@ -119,7 +138,11 @@ const PersonalData = () => {
                   
                 )}
               </Formik>
+              
             </>
+            :
+            <Text>Cargando...</Text>
+            }
           </View>
         </View>
       </ScrollView>
