@@ -21,8 +21,8 @@ const Home = () => {
   date = [day, ...rest].join(' ')
   const halfLength = Math.ceil(tipos.length / 2); 
 
-const array1 = tipos.slice(0, halfLength);
-const array2 = tipos.slice(halfLength, tipos.length);
+  const array1 = tipos.slice(0, halfLength);
+  const array2 = tipos.slice(halfLength, tipos.length);
   
 
   useEffect(() => {
@@ -45,7 +45,7 @@ const array2 = tipos.slice(halfLength, tipos.length);
 
   const renderItem = ({ item }) => (
     <View>
-      <WorkoutCard title={item.nombre}/>
+      <WorkoutCard title={item.nombre} id={item.id}/>
     </View>
 
   );
