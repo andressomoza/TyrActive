@@ -10,6 +10,10 @@ const HomeLayout = () => {
           name="home"
           options={{headerShown: false}}
         />
+        <Stack.Screen
+          name="training-plans"
+          options={{headerShown: false}}
+        />
       </Stack>
 
       <StatusBar backgroundColor="#161622" style="dark" />

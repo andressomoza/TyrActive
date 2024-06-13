@@ -3,7 +3,7 @@ import React from 'react'
 import { router } from "expo-router";
 import Ionicons from '@expo/vector-icons/Ionicons';
 
-const TopButtons = ({ title }) => {
+const TopButtons = ({ title, home}) => {
   return (
     <View className="w-full flex-row justify-between items-center">
       <TouchableOpacity
@@ -17,7 +17,7 @@ const TopButtons = ({ title }) => {
         onPress={() => router.navigate('/home')}
         className="mr-5"
         >
-          <Ionicons name="home-outline" size={30} color="black" />
+          <Ionicons name="home-outline" size={30} color={home ? "black" : "transparent"} />
       </TouchableOpacity>
     </View>
   )
