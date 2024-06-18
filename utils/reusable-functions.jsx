@@ -3,18 +3,16 @@ import { router } from "expo-router";
 import { createUserWithEmailAndPassword, sendEmailVerification, updateProfile, signInWithEmailAndPassword, sendPasswordResetEmail } from "firebase/auth";
 import { doc, setDoc } from "firebase/firestore";
 import { FIRESTORE } from '../firebase-config'
-export const registerUser = (auth, email, password, name, phone) => {
-  createUserWithEmailAndPassword(auth, email, password)
+export const registerUser = (auth, form) => {
+  console.log("CORREO QUE LLEGA: ", form)
+  createUserWithEmailAndPassword(auth, form.email, form.password)
     .then((userCredential) => {
       console.log('User created')
       const user = userCredential.user;
       console.log(user)
       const docRef = doc(FIRESTORE, "users", user.uid);
-      let form = {
-        name: name,
-        email: email,
-        phone: phone,
-        password: password,
+      form = {
+        ...form,
         id: user.uid
       }
       setDoc(docRef, form);
@@ -34,12 +32,13 @@ export const registerUser = (auth, email, password, name, phone) => {
           {text: 'OK', onPress: () => console.log('OK Pressed')},
         ]);
         updateProfile(auth.currentUser, {
-          displayName: name, phoneNumber: phone
+          displayName: form.name, phoneNumber: form.phone
         }).catch((error) => {console.log(error.message)})
         console.log(auth.currentUser)
       router.navigate("/")
     })
     .catch((error) => {
+      console.log("FALLO1")
       console.log(error.message);
     });
 }
