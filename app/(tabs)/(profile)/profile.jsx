@@ -63,6 +63,11 @@ const Profile = () => {
               onPress={() => router.push('personal-data')}>
               <Text className="font-mregular text-lg p-2">Modificar datos personales</Text>
             </TouchableOpacity>
+            <View className="w-[90vw] bg-gray-100 h-px mt-2"></View>
+            <TouchableOpacity
+              onPress={() => router.push('health-data')}>
+              <Text className="font-mregular text-lg p-2">Datos de salud</Text>
+            </TouchableOpacity>
             <View className="w-[90vw] bg-gray-100 h-px"></View>
             <TouchableOpacity>
               <Text className="font-mregular text-lg p-2">Métodos de pago</Text>
@@ -89,10 +94,10 @@ const Profile = () => {
           <CustomButton 
             title="Cerrar sesion"
             handlePress={() => signout()}
-            containerStyles="w-[60vw] mt-7"
+            containerStyles="w-[60vw] mt-14"
           />
         </View>
-        <View className="mt-[85px]">
+        <View className="mt-[60px]">
           <Text className="font-mregular text-gray-500">Developed by @andres_somoza</Text>
         </View>
       </View>

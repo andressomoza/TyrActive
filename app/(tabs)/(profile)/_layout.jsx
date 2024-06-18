@@ -26,6 +26,10 @@ const ProfileLayout = () => {
           name="subscription-details"
           options={{headerShown: false}}
         />
+        <Stack.Screen
+          name="health-data"
+          options={{headerShown: false}}
+        />
       </Stack>
 
       <StatusBar backgroundColor="#161622" style="dark" />
