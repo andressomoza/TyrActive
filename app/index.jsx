@@ -9,7 +9,7 @@ import { useGlobalContext } from "../context/GlobalProvider";
 
 export default function App() {
 
-    
+    console.log("LOGOOOO", images.logo)
 
     return (
         <SafeAreaView className="bg-primary h-full">

@@ -8,21 +8,24 @@ import { router } from "expo-router";
 import 'moment/locale/es';  // I
 
 import Workout from '../../components/Workout'
+import Diet from '../../components/Diet'
 import CustomButton from '../../components/CustomButton';
 const MiZona = () => {
   const [usuario, setUsuario] = useState({})
   const [modo, setModo] = useState('entrenamiento')
-  const [selectedDay, setSelectedDay] = useState(moment().format('YYYY-MM-DD'));  // Inicializa el día seleccionado con el día actual
-  const isFocused = useIsFocused();
+  const [selectedDay, setSelectedDay] = useState(moment().format('YYYY-MM-DD'))
+  const [entrenamiento, setEntrenamiento] = useState([])
+  const [dieta, setDieta] = useState([])
+  const isFocused = useIsFocused()
   
   const auth = getAuth();
 
-  const startOfWeek = moment().startOf('week');
-  const days = Array.from({ length: 7 }, (_, i) => startOfWeek.clone().add(i, 'day'));
-
+  const startOfWeek = moment().startOf('week')
+  const days = Array.from({ length: 7 }, (_, i) => startOfWeek.clone().add(i, 'day'))
+  console.log("DIAS", days.map(day => day.format('YYYY-MM-DD')))
   const handleDayPress = (day) => {
-    setSelectedDay(day.format('YYYY-MM-DD'));
-    console.log('Día presionado:', day.format('YYYY-MM-DD'));
+    setSelectedDay(day.format('YYYY-MM-DD'))
+    console.log('Día presionado:', day.format('YYYY-MM-DD'))
   };
 
   
@@ -33,8 +36,23 @@ const MiZona = () => {
         setUsuario(data)
         console.log(data)
       })
+
+      RemoteInfoDatasource.getEntrenamientoDelDia(auth.currentUser.uid, selectedDay)
+      .then((data) => {
+        console.log(data)
+        setEntrenamiento(data)
+        console.log("ENTRENAMIENTO SETEADO: ", entrenamiento)
+      })
+
+      RemoteInfoDatasource.getDietaDelDia(auth.currentUser.uid, selectedDay)
+      .then((data) => {
+        console.log("dieta traida")
+        console.log(data)
+        setDieta(data)
+        console.log("Dieta SETEADA: ", dieta)
+      })
     }  
-  }, [isFocused])
+  }, [isFocused, selectedDay])
   return (
     <View>
       
@@ -75,7 +93,16 @@ const MiZona = () => {
           </View>
         </View>
         <View className="items-center justify-center mt-5">
-          {modo === 'entrenamiento' ? <Workout /> : <Text>Dieta</Text>}  
+        
+        {modo === 'entrenamiento' 
+          ? entrenamiento.length === 0 ? <Text>No hay entrenamiento para este día</Text> : <Workout entrenamiento={entrenamiento[0]}/>
+          :
+            modo === 'dieta' 
+            ? usuario.tarifa !== 'Entrenamiento personalizado + nutrición' ? <Text>Para ver la dieta debe contratar el plan de entrenamiento + nutrición</Text>
+            :
+             dieta.length === 0 ? <Text>No hay dieta para este día</Text> : <Diet dieta={dieta[0]}/> 
+          : <Text>Cargando</Text>}
+           
 
         </View>
       </View>

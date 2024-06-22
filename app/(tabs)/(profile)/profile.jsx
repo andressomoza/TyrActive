@@ -9,7 +9,7 @@ import { firebaseConfig } from "../../../firebase-config";
 import { FIRESTORE } from '../../../firebase-config';
 import { RemoteInfoDatasource } from "../../../data/remote-info.datasource";
 
-import {images} from '../../../constants/images';
+import {images} from '../../../constants';
 import Card from '../../../components/Card';
 import CustomButton from '../../../components/CustomButton';
 
@@ -17,6 +17,7 @@ const Profile = () => {
   const isFocused = useIsFocused();
   const [user, setUser] = useState([]);
   const auth = getAuth();
+  console.log("images", images.logo)
 
   useEffect(() => {
     console.log('isFocused: ', isFocused)
@@ -46,9 +47,10 @@ const Profile = () => {
           <View className="bg-orange-200 h-32 w-[90vw] rounded-3xl mt-5 flex-row">
             <View className=" h-32 justify-center">
               <Image
-                source={{uri: user.photoUrl !== null ? user.photoUrl : 'https://www.w3schools.com/w3images/avatar2.png'}}
+                source={{uri: user.photoUrl !== null ? user.photoUrl : images.avatar}}
                 style={{ width: 100, height: 100, borderRadius: 100 }}
                 className="ml-3"
+                resizeMode="contain"
               />
             </View>
             <View className=" h-32 justify-center w-60 ml-2">
@@ -63,7 +65,7 @@ const Profile = () => {
               onPress={() => router.push('personal-data')}>
               <Text className="font-mregular text-lg p-2">Modificar datos personales</Text>
             </TouchableOpacity>
-            <View className="w-[90vw] bg-gray-100 h-px mt-2"></View>
+            <View className="w-[90vw] bg-gray-100 h-px"></View>
             <TouchableOpacity
               onPress={() => router.push('health-data')}>
               <Text className="font-mregular text-lg p-2">Datos de salud</Text>

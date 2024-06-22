@@ -1,24 +1,25 @@
 import { View, Text, FlatList } from 'react-native'
 import React from 'react'
 
-const Workout = () => {
-  const activacion = [
-    { id: '1', ejercicio: 'Flexiones', dosis: '3 x de 10' },
-    { id: '2', ejercicio: 'Sentadillas', dosis: '4 x 15' },
-    { id: '3', ejercicio: 'Abdominales', dosis: '2 x 20' },
-    { id: '4', ejercicio: 'Burpees', dosis: '3 x 10' },
-    // Añade más ejercicios según sea necesario
-  ];
+const Workout = ({entrenamiento}) => {
+  console.log(entrenamiento.activacion)
 
-  const ejercicios = [
-    { id: '1', ejercicio: 'Flexiones', dosis: '3 x de 10' },
-    { id: '2', ejercicio: 'Sentadillas', dosis: '4 x 15' },
-    { id: '3', ejercicio: 'Abdominales', dosis: '2 x 20' },
-    { id: '4', ejercicio: 'Burpees', dosis: '3 x 10' },
-    { id: '5', ejercicio: 'Abdominales', dosis: '2 x 20' },
-    { id: '6', ejercicio: 'Burpees', dosis: '3 x 10' },
-    // Añade más ejercicios según sea necesario
-  ];
+  const activacion = Object.keys(entrenamiento.activacion).map((key, index) => {
+    return {
+      id: index + 1,
+      ejercicio: key,
+      dosis: entrenamiento.activacion[key]
+    }
+  })
+
+  
+  const ejercicios = Object.keys(entrenamiento.partePrincipal).map((key, index) => {
+    return {
+      id: index + 1,
+      ejercicio: key,
+      dosis: entrenamiento.partePrincipal[key]
+    }
+  })
   
   const renderItem = ({ item }) => (
     <View className="flex-row w-[75vw] justify-between">
@@ -29,8 +30,9 @@ const Workout = () => {
   return (
     <View className="w-[90vw]">
       <View>
-        <Text className="font-msemibold text-base">Intensidad general: <Text className="font-mregular">Media</Text></Text>
-        <Text className="font-msemibold text-base">Observaciones: <Text className="font-mregular">No procede</Text></Text>
+        <Text className="font-msemibold text-base">Intensidad general: <Text className="font-mregular text-base">{entrenamiento.intensidadGeneral}</Text></Text>
+        <Text className="font-msemibold text-base">Observaciones: <Text className="font-mregular text-base">{entrenamiento.observaciones}</Text></Text>
+        {entrenamiento.descripcion !== undefined ? <Text className="font-msemibold text-base">Descripción: <Text className="font-mregular text-base">{entrenamiento.descripcion}</Text></Text> : null}
       </View>
       <View className="items-center mt-3">
         <Text className="font-mbold text-lg">ACTIVACIÓN</Text>

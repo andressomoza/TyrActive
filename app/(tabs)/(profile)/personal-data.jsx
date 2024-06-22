@@ -1,11 +1,13 @@
 import { View, Text, SafeAreaView, Image, Alert, TouchableOpacity, ScrollView } from 'react-native'
-import Reac, { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import { FIREBASE_AUTH } from '../../../firebase-config';
 import * as ImagePicker from 'expo-image-picker'
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 import { updateProfile, updatePhoneNumber } from "firebase/auth";
 import { RemoteInfoDatasource } from "../../../data/remote-info.datasource";
+import {images} from '../../../constants/images';
+
 
 import CustomButton from '../../../components/CustomButton'
 import FormField from '../../../components/FormField'
@@ -21,12 +23,13 @@ const SignUpSchema = Yup.object().shape({
 const PersonalData = () => {
   const [datos, setDatos] = useState({});
   const [image, setImage] = useState(datos.photoUrl !== null ? datos.photoUrl : 'https://www.w3schools.com/w3images/avatar2.png');
-    
+  
   useEffect(() => {
     RemoteInfoDatasource.getDoc('users', FIREBASE_AUTH.currentUser.uid)
     .then((data) => {
       setDatos(data)
       setImage(data.photoUrl)
+      console.log(data.photoUrl)
     });
   }, [])
   
@@ -83,10 +86,16 @@ const PersonalData = () => {
             className="mt-5"
             onPress={pickImage}
           >
-            <Image
-              source={{uri: datos.photoUrl !== null ? datos.photoUrl : 'https://www.w3schools.com/w3images/avatar2.png'}}
-              style={{ width: 150, height: 150, borderRadius: 100 }}
-            />
+            {datos.photoUrl !== undefined ? 
+              <Image
+                source={{uri: datos.photoUrl !== null ? datos.photoUrl : image}}
+                style={{ width: 150, height: 150, borderRadius: 100 }}
+              />
+              :
+              <View className="bg-secondary p-3 rounded-lg">
+                <Text className="text-white font-msemibold">Seleccionar foto</Text>
+              </View> }
+            
           </TouchableOpacity>
           <View className="w-[90vw]">
             { datos.name !== undefined ?

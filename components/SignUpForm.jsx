@@ -54,19 +54,27 @@ const SignUp = () => {
     setStep(2);
   }
   const handle2 = (values) => {
+    const currentDate = new Date();
+    const formattedDate = currentDate.toLocaleDateString('es-ES', {
+      day: '2-digit',
+      month: '2-digit',
+      year: 'numeric',
+    });
     let formulario = form;
     for(let key in values) {
-      formulario[key] = values[key];
+      if (key === 'height' || key === 'weight') {
+        formulario[key] = [{ value: parseFloat(values[key]), date: formattedDate }]
+        
+      } else {
+      formulario[key] = values[key]
+      }
     }
     setForm(formulario);
     setStep(3);
-    console.log(formulario.email)
   }
 
   const toggleDatePicker = () => {
     setShowPicker(!showPicker)
-    console.log("pressed")
-    console.log(showPicker)
   }
 
   const onChangeDate = ({type}, selectedDate) => {
@@ -76,7 +84,6 @@ const SignUp = () => {
       if (Platform.OS === 'android') {
         toggleDatePicker()
         setDateOfBirth(currentDate.toDateString())
-        console.log("hola")
         setFieldValue('birthday', currentDate);
       }
     } else {
@@ -148,7 +155,7 @@ const SignUp = () => {
 
       {step === 2 && (
         <Formik 
-          initialValues={{ birthday: form.birthday, weight: form.weight, height: form.height, sex: form.sex }}
+          initialValues={{ birthday: form.birthday, weight: form.weight[0], height: form.height[0], sex: form.sex }}
           validationSchema={SignUp2Schema}
           onSubmit={values => handle2(values)}
           validateOnMount={true}
