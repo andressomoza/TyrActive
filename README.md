@@ -42,9 +42,12 @@ Instala las dependencias del proyecto usando `npm`.
 npm install
 ```
 
+### 4. Sustituir claves
+
+Sustituir los `process.env` por las claves de la base de datos.
 
 
-### 4. Ejecutar el Proyecto
+### 5. Ejecutar el Proyecto
 En tu terminal, ejecuta:
 
 ```sh
