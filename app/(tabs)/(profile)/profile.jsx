@@ -67,10 +67,6 @@ const Profile = () => {
               <Text className="font-mregular text-lg p-2">Datos de salud</Text>
             </TouchableOpacity>
             <View className="w-[90vw] bg-gray-100 h-px"></View>
-            <TouchableOpacity>
-              <Text className="font-mregular text-lg p-2">Métodos de pago</Text>
-            </TouchableOpacity>
-            <View className="w-[90vw] bg-gray-100 h-px"></View>
             <TouchableOpacity
               onPress={() => router.push('my-subscription')}
             >

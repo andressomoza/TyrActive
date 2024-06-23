@@ -1,50 +1,55 @@
-# Welcome to your Expo app 👋
+# Manual para descargar y ejecutar TyrActive
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+Este manual te guiará paso a paso para descargar y ejecutar TyrActive que está alojado en GitHub. Asegúrate de tener las herramientas necesarias instaladas antes de comenzar.
 
-## Get started
+## Requisitos Previos
 
-1. Install dependencies
+1. **Node.js**: Asegúrate de tener Node.js instalado.
+2. **Git**: Necesitarás Git para clonar el repositorio.
+3. **React Native CLI**: Instala la CLI de React Native si aún no la tienes.
+    ```sh
+    npm install -g react-native-cli
+    ```
+4. **Expo**: Necesitarás Expo para ejecutar el proyecto.
+   ```sh
+    npm install -g expo-cli exp
+    ```
 
-   ```bash
-   npm install
-   ```
+## Pasos para Descargar y Ejecutar el Proyecto
 
-2. Start the app
+### 1. Clonar el Repositorio de GitHub
 
-   ```bash
-    npx expo start
-   ```
+Abre una terminal y navega a la ubicación donde deseas clonar el repositorio. Luego, ejecuta el siguiente comando:
 
-In the output, you'll find options to open the app in a
-
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
-
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
-
-```bash
-npm run reset-project
+```sh
+git clone https://github.com/andressomoza/TyrActive.git
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
 
-## Learn more
+### 2. Navegar al Directorio del Proyecto
 
-To learn more about developing your project with Expo, look at the following resources:
+Después de clonar el repositorio, navega al directorio del proyecto:
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+```sh
+cd TyrActive
+```
 
-## Join the community
+### 3. Instalar Dependencias
 
-Join our community of developers creating universal apps.
+Instala las dependencias del proyecto usando `npm`.
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+```sh
+npm install
+```
+
+
+
+### 4. Ejecutar el Proyecto
+En tu terminal, ejecuta:
+
+```sh
+npx expo start
+```
+Ahora pulsa algunas de las teclas que indica la terminal dependiendo de donde quieras ejecutar la aplicación.
+
+Ya está ejecutada.
