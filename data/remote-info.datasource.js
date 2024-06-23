@@ -91,7 +91,7 @@ const getTarifasSuscripcion = async () => {
 
 const addDoc = async (targetCollection, newDoc) => {
   const docRef = await addFirestoreDoc(
-    collection(firestore, targetCollection),
+    collection(FIRESTORE, targetCollection),
     newDoc
   );
 
@@ -115,6 +115,11 @@ const upDoc = async (collection, id, data) => {
   updateDoc(docRef, data);
 };
 
+const eliminar = async (collection, id) => {
+  const docRef = doc(FIRESTORE, collection, id);
+  deleteDoc(docRef);
+}
+
 export const RemoteInfoDatasource = {
   getDoc,
   addDoc,
@@ -124,5 +129,6 @@ export const RemoteInfoDatasource = {
   getTarifasSuscripcion,
   getEntrenamientoDelDia,
   getDietaDelDia,
-  updateHealthData
+  updateHealthData,
+  eliminar
 };

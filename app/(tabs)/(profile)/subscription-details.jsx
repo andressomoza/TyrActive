@@ -12,6 +12,7 @@ const SubscriptionDetails = () => {
   const params = useLocalSearchParams();
   const [usuario, setUsuario] = useState({})
   const [tarifa, setTarifa] = useState({})
+  const [solicitada, setSolicitada] = useState(false)
   const { name, price, carac } = params;
   let caracArray = carac.split(',');
 
@@ -22,12 +23,29 @@ const SubscriptionDetails = () => {
       console.log(usuario)
       setTarifa(data.tarifa ? data.tarifa : null)
     });
-  }, [tarifa])
+
+    RemoteInfoDatasource.getCollection('peticiones')
+    .then((response) => {
+      response.forEach((peticion) => {
+        if (peticion.usuarioId === getAuth().currentUser.uid && peticion.tarifa === name) {
+          setSolicitada(true)
+          console.log('Solicitada')
+        }
+      })
+    })
+  }, [tarifa, solicitada])
 
   const contratada = () => {
-    RemoteInfoDatasource.upDoc('users', getAuth().currentUser.uid, {tarifa: name})
-    setTarifa(name)
-    console.log('Contratada')
+    const peticion = {
+      tarifa: name,
+      usuarioId: getAuth().currentUser.uid,
+      usuario: usuario.name,
+    }
+    setSolicitada(true)
+    RemoteInfoDatasource.addDoc('peticiones', peticion)
+    //RemoteInfoDatasource.upDoc('users', getAuth().currentUser.uid, {tarifa: name})
+    //setTarifa(name)
+    //console.log('Contratada')
   }
 
   return (
@@ -51,11 +69,13 @@ const SubscriptionDetails = () => {
           { tarifa !== null && tarifa === name ?
             <Text className="font-mregular">Actualmente tiene esta tarifa contratada</Text>
             :
+            solicitada === false ?
             <CustomButton
               title={"Contratar esta"}
               handlePress={contratada}
               containerStyles={"w-40"}
             />
+            : <Text className="font-mregular">Ya ha solicitado esta tarifa</Text>
           }
            
         </View>
