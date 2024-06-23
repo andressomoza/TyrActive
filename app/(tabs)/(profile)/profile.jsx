@@ -4,13 +4,9 @@ import React, { useState, useEffect } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Redirect, router } from "expo-router";
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
-import { initializeApp } from "firebase/app";
-import { firebaseConfig } from "../../../firebase-config";
-import { FIRESTORE } from '../../../firebase-config';
 import { RemoteInfoDatasource } from "../../../data/remote-info.datasource";
 
 import {images} from '../../../constants';
-import Card from '../../../components/Card';
 import CustomButton from '../../../components/CustomButton';
 
 const Profile = () => {

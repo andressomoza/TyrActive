@@ -4,7 +4,7 @@ import React from 'react';
 const Diet = ({ dieta }) => {
 
   const DietCard = ({ title, items }) => (
-    <View className="bg-green-400 mb-5 p-3 rounded-xl">
+    <View className="bg-orange-200 mb-5 p-3 rounded-xl">
       <Text className="font-mbold text-base">{title}</Text>
       {items && items.length > 0 ? (
         items.map((item, index) => (

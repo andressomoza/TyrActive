@@ -7,7 +7,7 @@ import { initializeApp } from "firebase/app";
 import { firebaseConfig } from "../../../firebase-config";
 import { RemoteInfoDatasource } from "../../../data/remote-info.datasource";
 
-
+import WeightChart from '../../../components/WeightChart';
 import Card from '../../../components/Card';
 import CustomButton from '../../../components/CustomButton';
 import WorkoutCard from '../../../components/WorkoutCard';
@@ -75,11 +75,10 @@ const Home = () => {
           
 
           <View className="items-center justify-center">
-          <Card 
-            title={"Recetas"}
-            image={"🥗"}
-            containerStyles={"bg-red-400"}
-          />
+            <View className="w-[100vw] justify-start ml-10">
+              <Text className="font-msemibold text-lg">Evolución del peso</Text>
+            </View>
+            {Object.keys(user).length !== 0 ? <WeightChart user={user}/> : <Text>Cargando...</Text>}
           </View>
         </View>
       

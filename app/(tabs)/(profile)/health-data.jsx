@@ -33,9 +33,6 @@ const HealthData = () => {
       year: 'numeric',
     });
 
-  console.log('Actualizar datos de salud', values);
-
-  // Crear un objeto para el peso y la altura que incluya la fecha
   let newWeight = user.weight ? [...user.weight, { value: parseFloat(values.weight), date: formattedDate }] : [{ value: parseFloat(values.weight), date: formattedDate }];
   let newHeight = user.height ? [...user.height, { value: parseFloat(values.height), date: formattedDate }] : [{ value: parseFloat(values.height), date: formattedDate }];
     RemoteInfoDatasource.updateHealthData(getAuth().currentUser.uid, newWeight, newHeight, values.allergies)

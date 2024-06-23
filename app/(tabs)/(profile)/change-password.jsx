@@ -27,10 +27,7 @@ const ChangePassword = () => {
       ]);
       return
     }
-    console.log(values)
-    console.log(values.oldPassword)
-    console.log(values.newPassword)
-    console.log(values.newPassword2)
+    
     updatePassword(user, values.newPassword)
       .then(() => {
         Alert.alert('Cambio de contraseña', 'Contraseña cambiada con éxito', [
