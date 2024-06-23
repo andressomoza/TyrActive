@@ -22,10 +22,8 @@ const MiZona = () => {
 
   const startOfWeek = moment().startOf('week')
   const days = Array.from({ length: 7 }, (_, i) => startOfWeek.clone().add(i, 'day'))
-  console.log("DIAS", days.map(day => day.format('YYYY-MM-DD')))
   const handleDayPress = (day) => {
     setSelectedDay(day.format('YYYY-MM-DD'))
-    console.log('Día presionado:', day.format('YYYY-MM-DD'))
   };
 
   
@@ -34,22 +32,16 @@ const MiZona = () => {
       RemoteInfoDatasource.getDoc('users', auth.currentUser.uid)
       .then((data) => {
         setUsuario(data)
-        console.log(data)
       })
 
       RemoteInfoDatasource.getEntrenamientoDelDia(auth.currentUser.uid, selectedDay)
       .then((data) => {
-        console.log(data)
         setEntrenamiento(data)
-        console.log("ENTRENAMIENTO SETEADO: ", entrenamiento)
       })
 
       RemoteInfoDatasource.getDietaDelDia(auth.currentUser.uid, selectedDay)
       .then((data) => {
-        console.log("dieta traida")
-        console.log(data)
         setDieta(data)
-        console.log("Dieta SETEADA: ", dieta)
       })
     }  
   }, [isFocused, selectedDay])

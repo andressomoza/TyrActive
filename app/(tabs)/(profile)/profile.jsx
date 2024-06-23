@@ -13,15 +13,12 @@ const Profile = () => {
   const isFocused = useIsFocused();
   const [user, setUser] = useState([]);
   const auth = getAuth();
-  console.log("images", images.logo)
 
   useEffect(() => {
-    console.log('isFocused: ', isFocused)
     if(isFocused){
     RemoteInfoDatasource.getDoc('users', getAuth().currentUser.uid)
     .then((data) => {
       setUser(data)
-      console.log(user)
     });
   }
   }, [isFocused])

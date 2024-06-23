@@ -15,7 +15,7 @@ import { FIRESTORE, FIREBASE_APP } from "../firebase-config"
 const getDoc = async (docCollection, docId) => {
   const docRef = doc(FIRESTORE, docCollection, docId);
   const docSnap = await getFirestoreDoc(docRef);
-  console.log("Document data:", docSnap.data());
+
   return docSnap.data();
 };
 
@@ -23,13 +23,7 @@ const getCollection = async (col) => {
   let elements = []
   const snapshot = await getDocs(collection(FIRESTORE, col));
   snapshot.forEach((doc) => elements.push({ ...doc.data(), id: doc.ref.id }));
-  //const colRef = getDocs(FIRESTORE, col)
-  //console.log("ADIOS")
-  //snapshot.forEach(doc => {
-  //  console.log(doc.data());
-  //});
 
-  //console.log(elements)
   return elements
 }
 
@@ -44,11 +38,6 @@ const getEntrenamientoDelDia = async (usuario, dia) => {
     snapshot.forEach((doc) => {
       elements.push({ ...doc.data(), id: doc.ref.id });
     });
-
-    console.log("dia que se usara para filt")
-    console.log(dia)
-    console.log("ESTOS SON LOS ENTRENAMIENTOS TRAIDOS");
-    console.log(elements);
 
     return elements;
   } catch (error) {
@@ -68,11 +57,6 @@ const getDietaDelDia = async (usuario, dia) => {
     snapshot.forEach((doc) => {
       elements.push({ ...doc.data(), id: doc.ref.id });
     });
-
-    console.log("dia que se usara para filt")
-    console.log(dia)
-    console.log("ESTOS SON LAS DIETAS TRAIDOS");
-    console.log(elements);
 
     return elements;
   } catch (error) {

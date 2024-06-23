@@ -11,14 +11,10 @@ const WorkoutPage = () => {
   const [workout, setWorkout] = useState({})
   const isFocused = useIsFocused()
 
-  console.log("ID", id)
-  console.log(typeof id)
   useEffect(() => {
     if (isFocused) {
       RemoteInfoDatasource.getDoc('tipos-entrenamiento', id)
       .then((data) => {
-        console.log(data)
-        console.log("ENTRENAMIENTO", workout)
         setWorkout(data)
       })
     }

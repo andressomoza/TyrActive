@@ -9,10 +9,6 @@ export default function WeightChart({user}) {
     return `${day}-${month}`
   })
   const values = weights.map(item => item.value)
-  console.log("values", values)
-  console.log(weights.map(item => item.value))
-  console.log(weights)
-
   return (
     <View>
       <LineChart

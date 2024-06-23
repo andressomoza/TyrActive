@@ -2,7 +2,6 @@ import { View, Text, FlatList } from 'react-native'
 import React from 'react'
 
 const Workout = ({entrenamiento}) => {
-  console.log(entrenamiento.activacion)
 
   const activacion = Object.keys(entrenamiento.activacion).map((key, index) => {
     return {

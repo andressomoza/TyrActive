@@ -29,7 +29,6 @@ const PersonalData = () => {
     .then((data) => {
       setDatos(data)
       setImage(data.photoUrl)
-      console.log(data.photoUrl)
     });
   }, [])
   
@@ -41,9 +40,6 @@ const PersonalData = () => {
       quality: 1,
     });
   
-    console.log(result);
-    console.log(result.assets[0].uri);
-  
     if (!result.canceled) {
       let info = { ...datos, photoUrl: result.assets[0].uri }
       setDatos(info);
@@ -53,23 +49,7 @@ const PersonalData = () => {
 
   const handleChangeData = (values) => {
     RemoteInfoDatasource.updateUser('users', FIREBASE_AUTH.currentUser.uid, values.name, values.email, image, values.phone)
-    /*updateProfile(FIREBASE_AUTH.currentUser, {
-      displayName: values.name,
-      photoUrl: datos.photoUrl
-    }).then(() => {
-      console.log('Datos actualizados')
-    }).catch((error) => {
-      console.log(error)
-    })
-    updatePhoneNumber(FIREBASE_AUTH.currentUser, values.phone)
-      .then(() => {
-        console.log('Teléfono actualizado')
-      })
-      .catch((error) => {
-        console.log(error)
-      })
-    console.log(values)
-    */
+    
     Alert.alert('Actualización de datos', 'Se han actualizado los datos de tu perfil', [
       {text: 'OK', onPress: () => console.log('OK Pressed')},
     ]);

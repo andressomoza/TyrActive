@@ -5,12 +5,8 @@ import { SafeAreaView } from "react-native-safe-area-context";
 
 import {images} from '../constants'
 import CustomButton from "../components/CustomButton";
-import { useGlobalContext } from "../context/GlobalProvider";
 
 export default function App() {
-
-    console.log("LOGOOOO", images.logo)
-
     return (
         <SafeAreaView className="bg-primary h-full">
             <ScrollView contentContainerStyle={{ height: '100%' }}>

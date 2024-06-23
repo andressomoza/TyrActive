@@ -20,7 +20,6 @@ const SubscriptionDetails = () => {
     RemoteInfoDatasource.getDoc('users', getAuth().currentUser.uid)
     .then((data) => {
       setUsuario(data)
-      console.log(usuario)
       setTarifa(data.tarifa ? data.tarifa : null)
     });
 
@@ -29,7 +28,6 @@ const SubscriptionDetails = () => {
       response.forEach((peticion) => {
         if (peticion.usuarioId === getAuth().currentUser.uid && peticion.tarifa === name) {
           setSolicitada(true)
-          console.log('Solicitada')
         }
       })
     })
@@ -43,9 +41,6 @@ const SubscriptionDetails = () => {
     }
     setSolicitada(true)
     RemoteInfoDatasource.addDoc('peticiones', peticion)
-    //RemoteInfoDatasource.upDoc('users', getAuth().currentUser.uid, {tarifa: name})
-    //setTarifa(name)
-    //console.log('Contratada')
   }
 
   return (

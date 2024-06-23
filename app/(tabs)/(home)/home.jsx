@@ -29,7 +29,6 @@ const Home = () => {
     RemoteInfoDatasource.getDoc('users', getAuth().currentUser.uid)
     .then((data) => {
       setUser(data)
-      console.log(user)
       let name = data.name.split(' ');
       name = name.slice(0, 2).join(' ');
       setName(name)
@@ -38,7 +37,6 @@ const Home = () => {
     RemoteInfoDatasource.getCollection('tipos-entrenamiento')
     .then((response) => {
       setTipos(response)
-      console.log(response)
       
     })
   }, [])

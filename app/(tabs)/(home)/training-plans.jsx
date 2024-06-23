@@ -11,7 +11,6 @@ const TrainingPlans = () => {
     RemoteInfoDatasource.getCollection('tipos-entrenamiento')
     .then((response) => {
       setTipos(response)
-      console.log(response)
     })
   }, [])
 

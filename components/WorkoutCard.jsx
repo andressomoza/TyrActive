@@ -2,9 +2,7 @@ import { View, Text, TouchableOpacity } from 'react-native'
 import React from 'react'
 import { router } from 'expo-router'
 
-const WorkoutCard = ({ title, exercises, id }) => {
-  console.log(id)
-  console.log(title)
+const WorkoutCard = ({ title, exercises, id }) => {s
   return (
     <TouchableOpacity
       onPress={() => router.push({
