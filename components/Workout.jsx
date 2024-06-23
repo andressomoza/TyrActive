@@ -22,7 +22,7 @@ const Workout = ({entrenamiento}) => {
   })
   
   const renderItem = ({ item }) => (
-    <View className="flex-row w-[75vw] justify-between">
+    <View className="flex-row w-[85vw] justify-between">
       <Text className="font-msemibold text-base">{item.ejercicio}: </Text>
       <Text className="font-mregular text-base">{item.dosis}</Text>
     </View>
